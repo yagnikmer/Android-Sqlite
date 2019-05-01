@@ -21,21 +21,25 @@ public class SqliteHelper extends SQLiteOpenHelper {
     String DELETE_TABLE_QUERY = "drop table if exists " + TABLE;
     String READ_TABLE_QUERY = "select name from " + TABLE;
 
-    public SqliteHelper(Context context) {
-        super(context, DB, null, 1);
+    public SqliteHelper(Context context, int version) {
+        super(context, DB, null, version);
         this.context = context;
         Log.d(TAG, "SqliteHelper");
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        Log.d(TAG, "onCreate");
         db.execSQL(CREATE_TABLE_QUERY);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(DELETE_TABLE_QUERY);
-        onCreate(db);
+        Log.d(TAG, "onUpgrade Old version : " + oldVersion + " new version : " + newVersion);
+        if (newVersion > oldVersion) {
+            db.execSQL(DELETE_TABLE_QUERY);
+            onCreate(db);
+        }
     }
 
     public void insert(String name) {

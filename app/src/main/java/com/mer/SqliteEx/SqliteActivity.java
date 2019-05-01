@@ -18,7 +18,7 @@ public class SqliteActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SqlHelper = new SqliteHelper(this);
+        SqlHelper = new SqliteHelper(this,10);
     }
 
     public void display(View view) {
